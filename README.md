@@ -1,11 +1,11 @@
-# free-ai-models · 免费 AI 模型雷达
+# free-ai-models · 免费AI鸡蛋领取器
 
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-4B6BFB)](https://agentskills.io/)
 [![License](https://img.shields.io/badge/license-MIT-3DA639)](./LICENSE)
 [![最后核实](https://img.shields.io/badge/最后核实-2026--10--15-brightgreen)](#数据新鲜度)
 [![PRs](https://img.shields.io/badge/PRs-welcome-orange)](#贡献)
 
-一个 **AI Agent Skill**：装上它，你的 AI 助手在你说「有什么免费的 AI 模型」「免费 API 怎么搞」「白嫖大模型」的时候，会**自动**给你一份能直接照做的选型清单 —— 不用你自己去翻十几个官网对比。
+一个 **AI Agent Skill**（中文名：**免费AI鸡蛋领取器**）：装上它，你的 AI 助手在你说「有什么免费的 AI 模型」「免费 API 怎么搞」「白嫖大模型」的时候，会**自动**给你一份能直接照做的选型清单 —— 不用你自己去翻十几个官网对比。
 
 > 与普通「awesome 清单」的区别：这是给 **Agent** 用的技能包。清单是给 Agent 读的，触发词写好了，答案格式固定了，你问一句它就答，不用你教它怎么答。
 
