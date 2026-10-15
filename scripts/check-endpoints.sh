@@ -13,7 +13,7 @@ TIMEOUT=8
 
 # 名称|URL|备注
 ENDPOINTS=(
-  "Shannon API ⭐|https://shannonapi.xyz/v1/models|赞助位 · OpenAI 兼容端点"
+  "Shannon API ⭐|https://shannonapi.xyz/v1/models|OpenAI 兼容端点"
   "Google Gemini|https://generativelanguage.googleapis.com/v1beta/models|官方免费档"
   "Groq|https://api.groq.com/openai/v1/models|官方免费档"
   "Cerebras|https://api.cerebras.ai/v1/models|官方免费档"
