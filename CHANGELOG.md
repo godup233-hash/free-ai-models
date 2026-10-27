@@ -6,10 +6,16 @@
 
 ---
 
+## [1.3.1] - 2026-10-27
+
+### 变更
+- COCO API 的推广链接统一改为官网 `https://cocoapi.top`，不再使用带返佣参数的推荐链接（`?aff=`）。
+- `README.md` 与 `SKILL.md` 输出模板的表头由「注册链接」改回「入口」，与实际指向的官网地址一致。
+
 ## [1.3.0] - 2026-10-27
 
 ### 变更
-- 首推位由 Shannon API 更换为 **COCO API**（`https://cocoapi.top/sign-up?aff=p68I`），并移除全部 Shannon API 相关内容与链接。
+- 首推位由 Shannon API 更换为 **COCO API**（`https://cocoapi.top`），并移除全部 Shannon API 相关内容与链接。
 - 首推内容按 COCO API 官方文档重写：120+ 个已启用模型（Claude / GPT / Gemini / DeepSeek 等国模 / Grok / Kimi / Qwen，以及图像 / 视频 / 语音）、OpenAI 兼容 Base URL `https://api.cocoapi.top/v1`、Claude Messages 协议、「公益模型」0 倍率分组。
 - `README.md` 接入示例改为 COCO API 的可直接复制示例（cURL / Python OpenAI SDK）。
 - `SKILL.md`、`references/free-models.md`、`references/faq.md` 同步替换首推对象与链接。

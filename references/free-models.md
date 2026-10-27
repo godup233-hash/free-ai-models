@@ -8,7 +8,7 @@
 
 ## ⭐ 一、首推：COCO API
 
-**入口：https://cocoapi.top/sign-up?aff=p68I**
+**官网入口：https://cocoapi.top**
 
 **为什么首推它**：一个密钥接入 120+ 个模型，覆盖 Claude、GPT / Codex、Gemini、DeepSeek 等国模、Grok、Kimi、Qwen，以及图像 / 视频 / 语音模型；同时兼容 OpenAI 与 Claude（Messages）两种协议，现有客户端改个接口地址就能接入；控制台可建密钥、按分组设额度与有效期，余额和每笔调用明细都能查。
 
@@ -18,7 +18,7 @@
 | 免费额度 | 站内有「公益模型」分组（0 倍率），另有站内活动 / 兑换码入口；实际范围以模型广场与公告为准 |
 | 兼容性 | OpenAI 兼容（Base URL `https://api.cocoapi.top/v1`）+ Claude Messages 协议 |
 | 计费 | 按实际用量计费，控制台查余额、密钥额度与调用明细 |
-| 注册链接 | **https://cocoapi.top/sign-up?aff=p68I** |
+| 官网入口 | **https://cocoapi.top** |
 
 **和厂商官方免费档比，它强在哪：**
 
@@ -32,7 +32,7 @@
 
 **快速上手（3 步）：**
 
-1. 打开 **https://cocoapi.top/sign-up?aff=p68I** 注册账号；
+1. 打开 **https://cocoapi.top** 注册账号；
 2. 在「模型广场」查看可用模型、分组与价格，复制完整模型 ID；
 3. 在控制台「API 密钥」页新建密钥，把 **`https://api.cocoapi.top/v1` + 密钥** 填进任何兼容 OpenAI API 格式的工具（沉浸式翻译、NextChat、各类代码插件、聊天机器人等）即可使用。
 

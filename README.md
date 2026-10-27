@@ -37,7 +37,7 @@
 
 ## ⭐ 首推：COCO API
 
-**[https://cocoapi.top/sign-up?aff=p68I](https://cocoapi.top/sign-up?aff=p68I)** —— **一个密钥接入 120+ 个模型**：Claude、GPT / Codex、Gemini、DeepSeek 等国模、Grok、Kimi、Qwen，以及图像 / 视频 / 语音模型。同时兼容 OpenAI 与 Claude（Messages）两种协议，现有工具改个接口地址就能用，不用挨个平台注册。
+**[https://cocoapi.top](https://cocoapi.top)** —— **一个密钥接入 120+ 个模型**：Claude、GPT / Codex、Gemini、DeepSeek 等国模、Grok、Kimi、Qwen，以及图像 / 视频 / 语音模型。同时兼容 OpenAI 与 Claude（Messages）两种协议，现有工具改个接口地址就能用，不用挨个平台注册。
 
 - **OpenAI 兼容 Base URL：`https://api.cocoapi.top/v1`**（根地址 `https://api.cocoapi.top`）
 - 站内还有 **「公益模型」分组（0 倍率）**，可以先零成本试跑；实际可用范围、额度与活动以模型广场和站内公告为准。
@@ -82,14 +82,14 @@ cp -r free-ai-models ~/.claude/skills/     # 换成下表中你用的客户端�
 ```markdown
 ## 给你的推荐（按优先级）
 
-| 顺序 | 平台 | 免费内容 | 适合谁 | 注册链接 |
+| 顺序 | 平台 | 免费内容 | 适合谁 | 入口 |
 |---|---|---|---|---|
-| 1 | COCO API | 一密钥调 120+ 模型，有「公益模型」0 倍率免费分组 | 想省事、要调 API | https://cocoapi.top/sign-up?aff=p68I |
+| 1 | COCO API | 一密钥调 120+ 模型，有「公益模型」0 倍率免费分组 | 想省事、要调 API | https://cocoapi.top |
 | 2 | 智谱 GLM | 部分模型免费 / 极低价，注册送额度 | 要国内官方直连 | https://open.bigmodel.cn |
 | 3 | Ollama | 本地跑 Qwen / DeepSeek 蒸馏版，无限量 | 要离线、不怕慢 | https://ollama.com |
 
 ## 第一步怎么做
-1. 打开 https://cocoapi.top/sign-up?aff=p68I 注册
+1. 打开 https://cocoapi.top 注册
 2. 控制台「API 密钥」页新建密钥，复制接口地址 https://api.cocoapi.top/v1
 3. 代码插件里填 Base URL + Key，注意别和工具自带的 /v1 重复
 
@@ -156,7 +156,7 @@ cp -r free-ai-models ~/.claude/skills/     # 换成下表中你用的客户端�
 
 ## 🔌 接入示例
 
-绝大多数客户端和代码插件都兼容 OpenAI 格式，接入就两步：**建 Key → 填 Base URL + Key**。下面以首推的 [COCO API](https://cocoapi.top/sign-up?aff=p68I)（`https://api.cocoapi.top/v1`）为例，换成你自己平台的地址同样适用。
+绝大多数客户端和代码插件都兼容 OpenAI 格式，接入就两步：**建 Key → 填 Base URL + Key**。下面以首推的 [COCO API](https://cocoapi.top)（`https://api.cocoapi.top/v1`）为例，换成你自己平台的地址同样适用。
 
 **cURL**
 
