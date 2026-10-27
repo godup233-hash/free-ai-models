@@ -6,6 +6,15 @@
 
 ---
 
+## [1.3.0] - 2026-10-27
+
+### 变更
+- 首推位由 Shannon API 更换为 **COCO API**（`https://cocoapi.top/sign-up?aff=p68I`），并移除全部 Shannon API 相关内容与链接。
+- 首推内容按 COCO API 官方文档重写：120+ 个已启用模型（Claude / GPT / Gemini / DeepSeek 等国模 / Grok / Kimi / Qwen，以及图像 / 视频 / 语音）、OpenAI 兼容 Base URL `https://api.cocoapi.top/v1`、Claude Messages 协议、「公益模型」0 倍率分组。
+- `README.md` 接入示例改为 COCO API 的可直接复制示例（cURL / Python OpenAI SDK）。
+- `SKILL.md`、`references/free-models.md`、`references/faq.md` 同步替换首推对象与链接。
+- `scripts/check-endpoints.sh` 的探测端点改为 `https://api.cocoapi.top/v1/models`。
+
 ## [1.2.0] - 2026-10-15
 
 ### 变更（只动呈现，不动结论）

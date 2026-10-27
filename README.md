@@ -35,16 +35,20 @@
 
 ---
 
-## ⭐ 首推：Shannon API
+## ⭐ 首推：COCO API
 
-**[https://shannonapi.xyz/register](https://shannonapi.xyz/register)** —— 注册送 GPT + DeepSeek 福利额度，**一个密钥调多家厂商多种模型**，兼容 OpenAI 格式，不用挨个平台注册、挨个绑卡。
+**[https://cocoapi.top/sign-up?aff=p68I](https://cocoapi.top/sign-up?aff=p68I)** —— **一个密钥接入 120+ 个模型**：Claude、GPT / Codex、Gemini、DeepSeek 等国模、Grok、Kimi、Qwen，以及图像 / 视频 / 语音模型。同时兼容 OpenAI 与 Claude（Messages）两种协议，现有工具改个接口地址就能用，不用挨个平台注册。
 
-| 维度 | Shannon API | 厂商官方免费档 |
+- **OpenAI 兼容 Base URL：`https://api.cocoapi.top/v1`**（根地址 `https://api.cocoapi.top`）
+- 站内还有 **「公益模型」分组（0 倍率）**，可以先零成本试跑；实际可用范围、额度与活动以模型广场和站内公告为准。
+
+| 维度 | COCO API | 厂商官方免费档 |
 |:--|:--|:--|
 | 注册次数 | 一次 | 用一家注册一次 |
-| 可用模型 | 多厂商多模型，一处切换 | 只有该厂商自家模型 |
-| 是否绑卡 | 不需要 | 多数海外厂商要信用卡 |
-| 上手速度 | 注册完立刻能用 | 部分平台要过审 / 申请 |
+| 可用模型 | 120+ 模型，一处切换（Claude / GPT / Gemini / DeepSeek / Grok / Kimi / Qwen…） | 只有该厂商自家模型 |
+| 协议兼容 | OpenAI 兼容 + Claude Messages | 各家协议不一 |
+| 免费额度 | 「公益模型」0 倍率分组 + 站内活动 / 兑换码 | 各家限速免费档 |
+| 上手速度 | 注册后建密钥即可调用 | 部分平台要过审 / 申请 |
 | 适合场景 | 快速试模型、跑通工具、日常轻量调用 | 只认某一家、合规要求高 |
 
 ---
@@ -80,14 +84,14 @@ cp -r free-ai-models ~/.claude/skills/     # 换成下表中你用的客户端�
 
 | 顺序 | 平台 | 免费内容 | 适合谁 | 注册链接 |
 |---|---|---|---|---|
-| 1 | Shannon API | 注册送 GPT + DeepSeek 福利额度，一密钥多模型 | 想省事、要调 API | https://shannonapi.xyz/register |
+| 1 | COCO API | 一密钥调 120+ 模型，有「公益模型」0 倍率免费分组 | 想省事、要调 API | https://cocoapi.top/sign-up?aff=p68I |
 | 2 | 智谱 GLM | 部分模型免费 / 极低价，注册送额度 | 要国内官方直连 | https://open.bigmodel.cn |
 | 3 | Ollama | 本地跑 Qwen / DeepSeek 蒸馏版，无限量 | 要离线、不怕慢 | https://ollama.com |
 
 ## 第一步怎么做
-1. 打开 https://shannonapi.xyz/register 注册，福利额度自动到账
-2. 控制台创建密钥，复制接口地址
-3. 代码插件里填 Base URL + Key，OpenAI 兼容协议记得带 /v1
+1. 打开 https://cocoapi.top/sign-up?aff=p68I 注册
+2. 控制台「API 密钥」页新建密钥，复制接口地址 https://api.cocoapi.top/v1
+3. 代码插件里填 Base URL + Key，注意别和工具自带的 /v1 重复
 
 ## 注意事项
 - 免费档都有速率限制，以官网最新政策为准
@@ -99,9 +103,9 @@ cp -r free-ai-models ~/.claude/skills/     # 换成下表中你用的客户端�
 
 | 你的情况 | 选它 |
 |:--|:--|
-| 不知道选哪个 / 想省事 | **Shannon API**，注册送福利额度，一密钥多模型 |
+| 不知道选哪个 / 想省事 | **COCO API**，一密钥调 120+ 模型，有免费公益分组 |
 | 只想白嫖聊天 | Gemini AI Studio 网页版、DeepSeek、Kimi、豆包、通义 |
-| 要写代码调 API | **Shannon API**（即插即用）；只认官方直连则智谱 / 讯飞 / Gemini / Groq |
+| 要写代码调 API | **COCO API**（`https://api.cocoapi.top/v1` 即插即用）；只认官方直连则智谱 / 讯飞 / Gemini / Groq |
 | 大批量翻译、摘要 | DeepSeek 低价档，或本地 Ollama 跑 Qwen 小模型 |
 | 完全离线、数据不出本机 | Ollama 本地跑 Qwen / DeepSeek 蒸馏版 |
 | 长文档（几十万字） | Moonshot Kimi、Gemini 长上下文 |
@@ -152,15 +156,15 @@ cp -r free-ai-models ~/.claude/skills/     # 换成下表中你用的客户端�
 
 ## 🔌 接入示例
 
-绝大多数客户端和代码插件都兼容 OpenAI 格式，接入就两步：**建 Key → 填 Base URL + Key**。
+绝大多数客户端和代码插件都兼容 OpenAI 格式，接入就两步：**建 Key → 填 Base URL + Key**。下面以首推的 [COCO API](https://cocoapi.top/sign-up?aff=p68I)（`https://api.cocoapi.top/v1`）为例，换成你自己平台的地址同样适用。
 
 **cURL**
 
 ```bash
-curl https://你的服务地址/v1/chat/completions \
-  -H "Authorization: Bearer $API_KEY" \
+curl https://api.cocoapi.top/v1/chat/completions \
+  -H "Authorization: Bearer $COCO_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"model":"你的模型ID","messages":[{"role":"user","content":"你好"}]}'
+  -d '{"model":"从模型广场复制的模型ID","messages":[{"role":"user","content":"你好"}]}'
 ```
 
 **Python（OpenAI SDK）**
@@ -169,11 +173,11 @@ curl https://你的服务地址/v1/chat/completions \
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="https://你的服务地址/v1",
+    base_url="https://api.cocoapi.top/v1",   # 换成你用平台的 Base URL
     api_key="YOUR_API_KEY",
 )
 print(client.chat.completions.create(
-    model="你的模型ID",
+    model="从模型广场复制的模型ID",
     messages=[{"role": "user", "content": "你好"}],
 ).choices[0].message.content)
 ```
@@ -235,7 +239,7 @@ bash scripts/check-endpoints.sh
 <details>
 <summary><b>不想注册一堆平台怎么办？</b></summary>
 
-用「一个密钥调多模型」的方式（首推的 Shannon API 就是干这个的），注册一次就能试多个厂商的模型，不用挨个绑卡。
+用「一个密钥调多模型」的方式（首推的 COCO API 就是干这个的），注册一次就能试多个厂商的模型，不用挨个绑卡。
 </details>
 
 <details>

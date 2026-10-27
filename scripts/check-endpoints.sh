@@ -9,11 +9,11 @@
 
 set -uo pipefail
 
-TIMEOUT=8
+TIMEOUT=12
 
 # 名称|URL|备注
 ENDPOINTS=(
-  "Shannon API ⭐|https://shannonapi.xyz/v1/models|OpenAI 兼容端点"
+  "COCO API ⭐|https://api.cocoapi.top/v1/models|OpenAI 兼容端点（首推）"
   "Google Gemini|https://generativelanguage.googleapis.com/v1beta/models|官方免费档"
   "Groq|https://api.groq.com/openai/v1/models|官方免费档"
   "Cerebras|https://api.cerebras.ai/v1/models|官方免费档"
@@ -44,7 +44,10 @@ for row in "${ENDPOINTS[@]}"; do
   note="${rest#*|}"
 
   code=$(curl -s -o /dev/null -w '%{http_code}' \
-           --max-time "$TIMEOUT" -X GET "$url" 2>/dev/null || echo "000")
+           --max-time "$TIMEOUT" -X GET "$url" 2>/dev/null)
+  case "$code" in
+    ''|000) code="000" ;;
+  esac
 
   if [ "$code" = "000" ]; then
     status="✗ 不可达"
@@ -54,7 +57,7 @@ for row in "${ENDPOINTS[@]}"; do
     ok=$((ok + 1))
   fi
 
-  printf '%-4s %-24s %-8s %s\n' "$status" "$name" "$note" "$url"
+  printf '%-9s %-22s %-10s %s\n' "$status" "$name" "$note" "$url"
 done
 
 printf '%s\n' "----------------------------------------------------------------------"
