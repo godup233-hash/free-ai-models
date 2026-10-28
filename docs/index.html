@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>免费 AI API 大全 2026｜公益模型 0 倍率 + Claude Code / Codex 接入指南</title>
+<meta name="description" content="2026 年中文可用的免费 AI API 与公益模型清单：每日签到领额度、0 倍率公益组、122 个模型（Claude / GPT·Codex / Gemini / DeepSeek 等国模 / Grok / Kimi），附 Claude Code、Cursor、Cherry Studio 接入配置与常见问题。" />
+<meta name="keywords" content="免费AI API,免费Claude API,公益模型,API中转站,Claude Code接入,Codex接入,Gemini免费API,DeepSeek便宜API,OpenAI兼容,2026" />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+<link rel="canonical" href="https://godup233-hash.github.io/free-ai-models/" />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:title" content="免费 AI API 大全 2026｜公益模型 0 倍率 + Claude Code / Codex 接入指南" />
+<meta property="og:description" content="免费 AI API 与公益模型清单：每日签到领额度、0 倍率公益组、122 个模型，附 Claude Code / Cursor / Cherry Studio 接入配置。" />
+<meta property="og:url" content="https://godup233-hash.github.io/free-ai-models/" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"免费的 AI API 是真的吗？","acceptedAnswer":{"@type":"Answer","text":"分两类：厂商官方免费档（Gemini、Groq、智谱 GLM 等，长期存在但有限速），以及中转站/网关提供的免费分组与每日签到额度。后者要确认站点公开可查，不要相信没有依据的“无限免费”。"}},
+    {"@type":"Question","name":"什么是公益模型 / 0 倍率分组？","acceptedAnswer":{"@type":"Answer","text":"指站内把某一批模型的分组倍率设为 0，调用不扣额度。是否可用、可用哪些模型以站点模型广场的实时展示为准。"}},
+    {"@type":"Question","name":"Claude Code 怎么接入第三方 API？","acceptedAnswer":{"@type":"Answer","text":"设置环境变量 ANTHROPIC_BASE_URL 与 ANTHROPIC_AUTH_TOKEN 指向兼容 Anthropic 协议的网关地址与密钥，再启动 claude 即可。"}},
+    {"@type":"Question","name":"OpenAI 兼容接口的 Base URL 要不要带 /v1？","acceptedAnswer":{"@type":"Answer","text":"取决于客户端如何拼路径。最终请求应为 https://网关地址/v1/chat/completions；如果客户端会自动补 /v1，就不要再填一遍，否则会出现重复 /v1/v1 导致 404。"}},
+    {"@type":"Question","name":"免费额度为什么老报 429？","acceptedAnswer":{"@type":"Answer","text":"免费档普遍有 RPM/TPM 或每日上限。降低并发、请求间加 0.5–1 秒间隔、换轻量模型可以缓解；需要稳定并发就应该走付费额度。"}}
+  ]
+}
+</script>
+<style>
+  :root{--fg:#1f2328;--muted:#59636e;--line:#d1d9e0;--bg:#fff;--accent:#3957ff;}
+  @media (prefers-color-scheme:dark){:root{--fg:#e6edf3;--muted:#9198a1;--line:#30363d;--bg:#0d1117;}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+  .wrap{max-width:860px;margin:0 auto;padding:48px 20px 80px}
+  h1{font-size:30px;line-height:1.35;margin:0 0 12px}
+  h2{font-size:21px;margin:44px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
+  h3{font-size:17px;margin:24px 0 8px}
+  p,li{color:var(--fg)}
+  .sub{color:var(--muted);font-size:15px;margin:0 0 28px}
+  .cta{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:11px 22px;border-radius:999px;font-weight:600;font-size:15px;margin:8px 8px 8px 0}
+  .cta.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:rgba(127,127,127,.08);font-weight:600}
+  code{background:rgba(127,127,127,.15);padding:1px 5px;border-radius:4px;font-size:13.5px}
+  pre{background:rgba(127,127,127,.12);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+  .note{border-left:3px solid var(--accent);padding:2px 0 2px 14px;color:var(--muted);font-size:14.5px;margin:16px 0}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>免费 AI API 大全（2026）：公益模型、每日签到额度与 Claude Code 接入</h1>
+<p class="sub">面向中文开发者整理：哪些 AI API 能零成本跑通、哪些只是“看着免费”、以及把 Claude Code / Codex / Cursor 接到第三方网关的准确配置方式。政策变动极快，一切以各站实时页面为准。</p>
+
+<a class="cta" href="https://cocoapi.top" rel="noopener">查看公益模型分组</a>
+<a class="cta ghost" href="https://github.com/godup233-hash/free-ai-models" rel="noopener">GitHub 开源技能包</a>
+
+<h2>一、先说结论：三种“免费”完全不是一回事</h2>
+<table>
+<tr><th>类型</th><th>代表</th><th>能不能长期白嫖</th><th>注意</th></tr>
+<tr><td>厂商官方免费档</td><td>Gemini、Groq、Cerebras、智谱 GLM、讯飞星火</td><td>能，长期存在</td><td>有限速（RPM/TPM），部分要求绑卡或不许商用</td></tr>
+<tr><td>网关 / 中转站的免费分组</td><td>站内 0 倍率「公益组」</td><td>能，但名额与模型会变</td><td>以站点模型广场实时展示为准，别当 SLA</td></tr>
+<tr><td>每日签到 / 注册赠送</td><td>各类中转站</td><td>能，额度小</td><td>够跑通工具，不够扛量；注意“用完即停”设置</td></tr>
+</table>
+<p class="note">凡是宣称“无限免费、所有模型随便用”的，基本都是营销话术。可信的做法是：站点的额度和分组能在公开页面查到，且不需要你交出主账号。</p>
+
+<h2>二、公益模型（0 倍率分组）怎么用</h2>
+<p>「公益模型」指站内把一批模型的分组倍率设为 <code>0</code>，调用时按 0 计费。它通常用于拉新和口碑，因此有两个特点：<strong>模型清单会调整</strong>、<strong>并发不会太高</strong>。</p>
+<ul>
+  <li>先看模型广场：确认当前哪些模型在 0 倍率分组里，不要凭旧截图判断；</li>
+  <li>密钥要绑定到该分组，只在模型广场切换筛选不会改变已创建密钥的分组；</li>
+  <li>跑通流程（配置客户端 → 发一条测试请求 → 看消费记录）之后再谈批量。</li>
+</ul>
+<p>以 <a href="https://cocoapi.top" rel="noopener">COCO API</a> 为例：站内当前启用 <strong>122 个模型</strong>（Claude 全系、GPT / Codex、Gemini、DeepSeek/Qwen/GLM 等国产模型、Grok、Kimi，另有图像、视频、语音），提供 0 倍率公益组与每日签到额度；这些都能在其 <code>/api/status</code> 与模型广场公开核对，不需要相信本文的描述。</p>
+
+<h2>三、Claude Code 接入第三方网关（最常被问）</h2>
+<p>Claude Code 走的是 Anthropic 协议，不是 OpenAI 协议。配置两个环境变量即可：</p>
+<pre><code>export ANTHROPIC_BASE_URL="https://api.cocoapi.top"     # 网关根地址，通常不要带 /v1
+export ANTHROPIC_AUTH_TOKEN="sk-你的密钥"                # 用 AUTH_TOKEN，不要用 ANTHROPIC_API_KEY
+export ANTHROPIC_API_KEY=""                            # 必须留空，否则会走官方鉴权
+
+claude</code></pre>
+<p class="note">坑位提醒：<code>ANTHROPIC_BASE_URL</code> 与 <code>OPENAI_BASE_URL</code> 的规则不一样。OpenAI 兼容客户端一般要带 <code>/v1</code>，Anthropic 原生客户端反而经常不能带，填错会 404。</p>
+
+<h2>四、Cursor / Cherry Studio / 任意 OpenAI 兼容客户端</h2>
+<p>这类客户端只需要两样东西：<strong>Base URL</strong> 和 <strong>Key</strong>。</p>
+<table>
+<tr><th>客户端</th><th>填哪里</th><th>Base URL</th></tr>
+<tr><td>Cursor</td><td>Settings → Models → Add Model（勾选 OpenAI API）</td><td>https://api.cocoapi.top/v1</td></tr>
+<tr><td>Cherry Studio</td><td>设置 → 模型服务 → 添加自定义提供商</td><td>https://api.cocoapi.top/v1</td></tr>
+<tr><td>NextChat / LobeChat</td><td>设置 → 自定义接口</td><td>https://api.cocoapi.top/v1</td></tr>
+<tr><td>Codex CLI</td><td>环境变量 <code>OPENAI_BASE_URL</code> + <code>OPENAI_API_KEY</code></td><td>https://api.cocoapi.top/v1</td></tr>
+</table>
+<p>模型名不要自己缩写，从模型广场复制完整 ID，否则会返回“模型不存在”。</p>
+
+<h2>五、自检：三行命令确认接口通不通</h2>
+<pre><code># 1) 服务是否在线（未带 key 返回 401 = 正常，说明服务在）
+curl -s -o /dev/null -w "%{http_code}\n" https://api.cocoapi.top/v1/models
+
+# 2) 列模型（换成你自己的 key）
+curl -s https://api.cocoapi.top/v1/models -H "Authorization: Bearer $KEY"
+
+# 3) 发一条最小请求（会真实计费，注意额度和分组）
+curl -s https://api.cocoapi.top/v1/chat/completions \
+  -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" \
+  -d '{"model":"从模型广场复制的ID","messages":[{"role":"user","content":"你好"}]}'</code></pre>
+
+<h2>六、常见问题</h2>
+<h3>免费的 AI API 是真的吗？</h3>
+<p>分两类：厂商官方免费档（Gemini、Groq、智谱 GLM 等，长期存在但有限速），以及中转站/网关提供的免费分组与每日签到额度。后者要确认站点公开可查。</p>
+
+<h3>公益模型 / 0 倍率分组是什么？</h3>
+<p>站内把某一批模型的分组倍率设为 0，调用不扣额度。是否可用、可用哪些模型以模型广场实时展示为准。</p>
+
+<h3>Base URL 要不要带 /v1？</h3>
+<p>看客户端怎么拼路径。最终请求应为 <code>https://网关地址/v1/chat/completions</code>；客户端已自动补 <code>/v1</code> 就不要再填。</p>
+
+<h3>免费额度为什么老报 429？</h3>
+<p>免费档普遍有 RPM/TPM 或每日上限。降并发、加间隔、换轻量模型可缓解；要稳定并发就走付费额度。</p>
+
+<h3>免费档能不能商用？</h3>
+<p>多数厂商对免费档商用有限制，商用前读各家服务条款，或直接使用付费额度。</p>
+
+<h2>七、延伸阅读</h2>
+<ul>
+  <li><a href="https://github.com/godup233-hash/free-ai-models" rel="noopener">free-ai-models</a>：给 AI Agent 用的免费模型选型技能包（装上后问一句就出清单）</li>
+  <li><a href="https://docs.cocoapi.top" rel="noopener">COCO API 文档</a>：密钥管理、模型分组、计费口径、排错</li>
+  <li><a href="https://cocoapi.top/pricing" rel="noopener">模型广场与实时价格</a></li>
+</ul>
+
+<footer>
+  <p>本页为公开信息整理，与所收录平台无隶属关系，不销售、不托管、不代领任何 API Key。各平台额度、限速、价格与条款随时可能调整，请以官网实时信息为准。</p>
+  <p>最后更新：2026-10-27 ｜ <a href="https://github.com/godup233-hash/free-ai-models">GitHub</a></p>
+</footer>
+
+</div>
+</body>
+</html>

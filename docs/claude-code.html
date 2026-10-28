@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code 免费 API 接入教程（2026）｜第三方网关配置与踩坑清单</title>
+<meta name="description" content="Claude Code 接入免费/低价第三方 API 的完整步骤：ANTHROPIC_BASE_URL 与 ANTHROPIC_AUTH_TOKEN 怎么填、为什么不能带 /v1、401 与 404 分别是什么原因、怎么确认模型真实性。" />
+<meta name="keywords" content="Claude Code 免费API,Claude Code 接入,ANTHROPIC_BASE_URL,Claude Code 中转,claude code 配置,API 中转站" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://godup233-hash.github.io/free-ai-models/claude-code.html" />
+<style>
+  :root{--fg:#1f2328;--muted:#59636e;--line:#d1d9e0;--bg:#fff;--accent:#3957ff;}
+  @media (prefers-color-scheme:dark){:root{--fg:#e6edf3;--muted:#9198a1;--line:#30363d;--bg:#0d1117;}}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  .wrap{max-width:800px;margin:0 auto;padding:48px 20px 80px}
+  h1{font-size:28px;line-height:1.35;margin:0 0 12px}
+  h2{font-size:20px;margin:38px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+  .sub{color:var(--muted);margin:0 0 24px}
+  pre{background:rgba(127,127,127,.12);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;line-height:1.6}
+  code{background:rgba(127,127,127,.15);padding:1px 5px;border-radius:4px;font-size:13.5px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+  th{background:rgba(127,127,127,.08)}
+  .note{border-left:3px solid var(--accent);padding:2px 0 2px 14px;color:var(--muted);font-size:14.5px;margin:16px 0}
+  a{color:var(--accent)}
+  footer{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Claude Code 接入第三方 API：完整配置与踩坑清单</h1>
+<p class="sub">Claude Code 用的是 Anthropic 协议，不是 OpenAI 协议——这是 90% 的人配不通的原因。下面是最小可用配置，以及 401 / 404 / 429 分别代表什么。</p>
+
+<h2>一、最小可用配置</h2>
+<pre><code>export ANTHROPIC_BASE_URL="https://api.cocoapi.top"   # 网关根地址
+export ANTHROPIC_AUTH_TOKEN="sk-你的密钥"
+export ANTHROPIC_API_KEY=""                           # 必须留空
+
+claude</code></pre>
+<p class="note">三行里最容易错的是第三行。只要 <code>ANTHROPIC_API_KEY</code> 有值，Claude Code 就可能走官方鉴权通道，把你的第三方密钥当官方 key 发出去，结果是 401。</p>
+
+<h2>二、为什么 <code>ANTHROPIC_BASE_URL</code> 不能带 <code>/v1</code></h2>
+<p>Claude Code 会自己在根地址后拼 <code>/v1/messages</code>。你如果填了 <code>https://xxx/v1</code>，最终请求会变成 <code>https://xxx/v1/v1/messages</code> → 404。</p>
+<table>
+<tr><th>协议</th><th>Base URL 示例</th><th>最终请求</th></tr>
+<tr><td>Anthropic（Claude Code）</td><td><code>https://api.cocoapi.top</code></td><td><code>/v1/messages</code></td></tr>
+<tr><td>OpenAI 兼容（Cursor 等）</td><td><code>https://api.cocoapi.top/v1</code></td><td><code>/v1/chat/completions</code></td></tr>
+</table>
+
+<h2>三、报错对照表</h2>
+<table>
+<tr><th>现象</th><th>最可能的原因</th><th>怎么查</th></tr>
+<tr><td>401 Invalid token</td><td>密钥无效/过期，或 <code>ANTHROPIC_API_KEY</code> 没清空</td><td>用 <code>curl /v1/models</code> 单独验证 key</td></tr>
+<tr><td>404 not found</td><td>路径重复 <code>/v1</code>，或把网页地址当接口</td><td>看最终请求 URL</td></tr>
+<tr><td>402 / 余额相关</td><td>钱包余额不足，或密钥额度/分组限制</td><td>控制台看余额 + 密钥分组</td></tr>
+<tr><td>429</td><td>并发或频率超限（免费档最常见）</td><td>降并发、加间隔、换轻量模型</td></tr>
+<tr><td>返回 HTML 而不是 JSON</td><td>请求打到了网页/错误页</td><td>核对路径与 Content-Type</td></tr>
+</table>
+
+<h2>四、怎么确认“我买的是不是真 Opus”</h2>
+<p>中转站最大的风险不是跑路，是偷偷降级。三个可执行的自检：</p>
+<ul>
+  <li>同一提示词分别用 Opus 与 Sonnet 跑，观察输出风格与耗时差异是否与分组倍率一致；</li>
+  <li>看响应里的 <code>model</code> 字段与计费明细中的模型名是否与你请求的一致；</li>
+  <li>用第三方检测工具或自建盲测脚本，长期跟踪可用率。</li>
+</ul>
+<p>以 <a href="https://cocoapi.top" rel="noopener">COCO API</a> 为例，其分组倍率在模型广场公开（Claude 各池倍率不同），你可以据此反推实际计费是否符合预期。是否划算请自己核价，本文不做推荐承诺。</p>
+
+<h2>五、要不要用免费额度跑 Claude Code</h2>
+<p>可以，但要认清定位：免费档适合<strong>跑通流程、试模型、写小脚本</strong>；不适合长时间 Agent 任务（一次任务几十万 token 很常见，免费额度撑不住）。建议先在付费分组小额测试，再决定主力渠道。</p>
+
+<h2>延伸阅读</h2>
+<ul>
+  <li><a href="./index.html">免费 AI API 大全（2026）</a></li>
+  <li><a href="./gongyi-models.html">公益模型（0 倍率）清单与用法</a></li>
+  <li><a href="https://docs.cocoapi.top/help/troubleshooting.html" rel="noopener">COCO API 排错文档</a></li>
+</ul>
+
+<footer>信息整理自公开文档，额度与政策以各站实时页面为准。最后更新：2026-10-27</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>公益模型是什么？0 倍率 AI 模型清单与正确用法（2026）</title>
+<meta name="description" content="公益模型 / 0 倍率分组是什么、能白嫖到什么程度、怎么正确使用：分组要绑定到密钥、模型清单会变、并发限制、如何判断站点是否公开可查，附常见踩坑。" />
+<meta name="keywords" content="公益模型,0倍率,免费AI模型,免费API额度,白嫖AI,API中转站,免费Claude,免费DeepSeek" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://godup233-hash.github.io/free-ai-models/gongyi-models.html" />
+<style>
+  :root{--fg:#1f2328;--muted:#59636e;--line:#d1d9e0;--bg:#fff;--accent:#3957ff;}
+  @media (prefers-color-scheme:dark){:root{--fg:#e6edf3;--muted:#9198a1;--line:#30363d;--bg:#0d1117;}}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  .wrap{max-width:800px;margin:0 auto;padding:48px 20px 80px}
+  h1{font-size:28px;line-height:1.35;margin:0 0 12px}
+  h2{font-size:20px;margin:38px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+  .sub{color:var(--muted);margin:0 0 24px}
+  pre{background:rgba(127,127,127,.12);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px}
+  code{background:rgba(127,127,127,.15);padding:1px 5px;border-radius:4px;font-size:13.5px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left}
+  th{background:rgba(127,127,127,.08)}
+  .note{border-left:3px solid var(--accent);padding:2px 0 2px 14px;color:var(--muted);font-size:14.5px;margin:16px 0}
+  a{color:var(--accent)}
+  footer{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>公益模型（0 倍率分组）是什么，能白嫖到什么程度</h1>
+<p class="sub">「公益模型」是 AI API 中转站里的一种分组策略：把某些模型的分组倍率设为 0，调用不扣额度。它真实存在，但有三条硬限制，不理解就会白折腾。</p>
+
+<h2>一、机制：倍率 0 意味着什么</h2>
+<p>中转站的计费公式大致是：<code>消耗 = 模型单价 × 分组倍率 × token 数</code>。倍率为 0 时，前两项乘积为 0，所以只要你的密钥绑在该分组、余额不为负，调用就不扣钱。</p>
+<table>
+<tr><th>你看到的</th><th>含义</th></tr>
+<tr><td>分组倍率 0</td><td>该分组内模型不扣费</td></tr>
+<tr><td>分组倍率 0.1 / 0.3</td><td>按官方价 1 折 / 3 折计费</td></tr>
+<tr><td>每日签到</td><td>每天领固定额度，属于另一种免费来源</td></tr>
+</table>
+
+<h2>二、三条硬限制</h2>
+<ul>
+  <li><strong>清单会变。</strong>公益组是拉新和口碑手段，今天有 Opus 不代表下周还有。判断依据只有模型广场的实时展示。</li>
+  <li><strong>密钥要绑分组。</strong>在模型广场切换筛选不会改变已创建密钥的分组，必须在密钥设置里指定。</li>
+  <li><strong>并发不会高。</strong>公益组通常限制并发或排队，长链路 Agent 任务容易被中断。</li>
+</ul>
+
+<h2>三、怎么判断一个站点的“公益”靠不靠谱</h2>
+<ol>
+  <li>额度与分组能否在<strong>不登录</strong>的公开页面查到（模型广场、状态接口）；</li>
+  <li>计费是否逐笔可查（有调用明细 = 敢给你对账）；</li>
+  <li>是否要求你交主账号、Cookie、长期令牌——要求这些的直接放弃；</li>
+  <li>有没有“用完即停”开关，避免免费额度用完后自动扣余额。</li>
+</ol>
+<p class="note">以 <a href="https://cocoapi.top" rel="noopener">COCO API</a> 为例：公益组的存在写在其站内公告里（2026-10-27 上线），当前启用 122 个模型，每日签到开关可通过 <code>/api/status</code> 的 <code>checkin_enabled</code> 字段核对，模型广场与价格页均无需登录即可查看。这些都可以自己验证，不必信本文。</p>
+
+<h2>四、典型用法：把公益组当“试验田”</h2>
+<pre><code># 1) 先确认端点在线（401 = 服务正常，需要鉴权）
+curl -s -o /dev/null -w "%{http_code}\n" https://api.cocoapi.top/v1/models
+
+# 2) 用公益分组的密钥列模型，确认你要的模型在该分组内
+curl -s https://api.cocoapi.top/v1/models -H "Authorization: Bearer $KEY"
+
+# 3) 跑通一条最小请求，再去控制台看是否产生消费
+#    如果公益组确实 0 倍率，这一条应当不扣额度</code></pre>
+
+<h2>五、常见误区</h2>
+<table>
+<tr><th>误区</th><th>实际</th></tr>
+<tr><td>“公益模型 = 无限免费随便用”</td><td>有并发与模型范围限制，随时可能调整</td></tr>
+<tr><td>“网页聊天免费，所以 API 也免费”</td><td>两个不同产品，计费体系完全不同</td></tr>
+<tr><td>“注册送 X 元”长期有效</td><td>多数是限时活动，过期即无</td></tr>
+<tr><td>“公益组能跑生产”</td><td>不能。生产必须准备付费额度与备用渠道</td></tr>
+</table>
+
+<h2>延伸阅读</h2>
+<ul>
+  <li><a href="./index.html">免费 AI API 大全（2026）</a></li>
+  <li><a href="./claude-code.html">Claude Code 接入第三方 API 教程</a></li>
+  <li><a href="https://github.com/godup233-hash/free-ai-models" rel="noopener">free-ai-models：给 Agent 用的免费模型选型技能包</a></li>
+</ul>
+
+<footer>信息整理自公开文档，额度与政策以各站实时页面为准。最后更新：2026-10-27</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+# 免费 AI API 大全（中文）
+
+> 面向中文开发者的免费 AI API / 公益模型（0 倍率分组）/ 每日签到额度整理，以及 Claude Code、Cursor、Codex 等客户端的接入配置与踩坑清单。本文档为公开信息整理，额度与政策以各平台实时页面为准。
+
+基础信息：
+- 主站（网关 / 模型广场 / 控制台）：https://cocoapi.top
+- 接口根地址：https://api.cocoapi.top
+- OpenAI 兼容 Base URL：https://api.cocoapi.top/v1
+- Anthropic（Claude Code）Base URL：https://api.cocoapi.top（不要带 /v1）
+- 公开状态接口：https://cocoapi.top/api/status
+- 技术文档：https://docs.cocoapi.top
+- 开源技能包：https://github.com/godup233-hash/free-ai-models
+
+## 核心页面
+
+- [免费 AI API 大全（2026）](https://godup233-hash.github.io/free-ai-models/index.html): 三种“免费”的区别、公益模型机制、接入配置、自检命令、常见问题
+- [Claude Code 接入第三方 API](https://godup233-hash.github.io/free-ai-models/claude-code.html): ANTHROPIC_BASE_URL / AUTH_TOKEN 配置、为什么不能带 /v1、401/404/429 对照表、如何验证模型真实性
+- [公益模型（0 倍率）清单与用法](https://godup233-hash.github.io/free-ai-models/gongyi-models.html): 倍率机制、三条硬限制、如何判断站点可信、典型用法、常见误区
+
+## 事实性要点（可被引用）
+
+- COCO API 当前启用模型数量：122 个（Claude 全系、GPT/Codex、Gemini、DeepSeek/Qwen/GLM 等国产模型、Grok、Kimi，以及图像、视频、语音）
+- 免费来源：站内「公益组」为 0 倍率分组（2026-10-27 上线公告）；另有每日签到额度（/api/status 中 checkin_enabled=true）
+- 计费口径：1:1 按量，quota_per_unit=500000（即 1 美元 = 500000 额度），余额不过期
+- 协议支持：OpenAI 兼容（/v1）+ Anthropic Claude Messages
+- 登录方式：支持 GitHub OAuth（/api/status 中 github_oauth=true）
+
+## 用法建议
+
+- 免费档适合跑通流程、试模型、小脚本；长链路 Agent 任务请使用付费额度
+- Base URL 是否需要 /v1 取决于客户端拼接方式：最终请求应为 https://网关/v1/chat/completions
+- 公益组模型清单会调整，判断依据只有模型广场的实时展示
+
+## 可选
+
+- [COCO API 文档](https://docs.cocoapi.top): 密钥管理、模型与分组、余额与计费、常见问题与排错
+- [模型广场与实时价格](https://cocoapi.top/pricing)
